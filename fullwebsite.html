@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tidal Posting - Social Media Management</title>
+<meta name="description" content="Tidal Posting - Social media management for gaming businesses, local shops, and content creators. Find your tide.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Jost:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #0097b2;
+    --teal-dark: #007a91;
+    --teal-light: #e6f6f9;
+    --cream: #f8f8f6;
+    --dark: #1a1a1a;
+    --mid: #555;
+    --light: #999;
+    --border: #e8e8e4;
+    --white: #ffffff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--cream); font-family: 'Jost', sans-serif; color: var(--dark); overflow-x: hidden; }
+
+  .top-bar { position: fixed; top: 0; left: 0; right: 0; height: 4px; background: var(--teal); z-index: 200; }
+
+  nav { position: fixed; top: 4px; left: 0; right: 0; z-index: 100; background: var(--white); border-bottom: 1px solid var(--border); padding: 0 5%; height: 60px; display: flex; align-items: center; justify-content: space-between; }
+  .nav-logo { display: flex; align-items: baseline; gap: 4px; text-decoration: none; }
+  .nav-logo-tidal { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--teal); letter-spacing: 2px; }
+  .nav-logo-posting { font-family: 'Playfair Display', serif; font-style: italic; font-size: 17px; color: var(--dark); }
+  .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
+  .nav-links a { text-decoration: none; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--mid); transition: color 0.2s; }
+  .nav-links a:hover { color: var(--teal); }
+  .region-switcher { display: flex; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: 20px; padding: 3px; }
+  .region-btn { padding: 4px 14px; border-radius: 16px; font-size: 11px; letter-spacing: 1px; font-weight: 500; cursor: pointer; border: none; background: transparent; color: var(--light); transition: all 0.2s; font-family: 'Jost', sans-serif; }
+  .region-btn.active { background: var(--teal); color: white; }
+
+  .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 120px 5% 80px; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -200px; right: -200px; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(0,151,178,0.06) 0%, transparent 70%); pointer-events: none; }
+  .hero-eyebrow { font-size: 11px; letter-spacing: 6px; text-transform: uppercase; color: var(--teal); margin-bottom: 24px; animation: fadeUp 0.8s ease both; }
+  .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(48px, 8vw, 88px); line-height: 1.05; color: var(--dark); margin-bottom: 8px; animation: fadeUp 0.8s 0.1s ease both; }
+  .hero-title-script { font-family: 'Playfair Display', serif; font-style: italic; font-size: clamp(32px, 5vw, 58px); color: var(--teal); display: block; animation: fadeUp 0.8s 0.15s ease both; }
+  .hero-divider { width: 50px; height: 2px; background: var(--teal); margin: 32px auto; animation: fadeUp 0.8s 0.2s ease both; }
+  .hero-subtitle { font-size: clamp(14px, 2vw, 17px); font-weight: 300; color: var(--mid); max-width: 540px; line-height: 1.8; margin-bottom: 44px; animation: fadeUp 0.8s 0.25s ease both; }
+  .hero-cta { display: inline-block; padding: 14px 36px; background: var(--teal); color: white; text-decoration: none; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; font-weight: 500; transition: background 0.2s, transform 0.2s; animation: fadeUp 0.8s 0.3s ease both; }
+  .hero-cta:hover { background: var(--teal-dark); transform: translateY(-2px); }
+  .scroll-hint { position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; animation: fadeUp 0.8s 0.6s ease both; }
+  .scroll-line { width: 1px; height: 44px; background: linear-gradient(to bottom, var(--teal), transparent); animation: pulse 2s ease infinite; }
+  .scroll-text { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--light); }
+
+  section { padding: 100px 5%; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-label { font-size: 10px; letter-spacing: 5px; text-transform: uppercase; color: var(--teal); margin-bottom: 14px; font-weight: 500; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(30px, 4vw, 46px); line-height: 1.2; color: var(--dark); margin-bottom: 18px; }
+  .section-title em { font-style: italic; color: var(--teal); }
+  .section-body { font-size: 15px; font-weight: 300; color: var(--mid); line-height: 1.8; max-width: 580px; }
+
+  /* ABOUT */
+  #about { background: var(--dark); }
+  #about .section-label { color: rgba(0,151,178,0.8); }
+  #about .section-title { color: var(--cream); }
+  #about .section-body { color: rgba(255,255,255,0.55); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+  .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.08); margin-bottom: 24px; }
+  .stat-box { padding: 28px 24px; background: rgba(255,255,255,0.03); }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 38px; color: var(--teal); line-height: 1; margin-bottom: 6px; }
+  .stat-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.35); line-height: 1.4; }
+
+  /* CHART */
+  .chart-wrap { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 20px; }
+  .chart-title { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 14px; }
+  .chart-svg { width: 100%; display: block; }
+  .chart-labels { display: flex; justify-content: space-between; margin-top: 8px; }
+  .chart-label { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.25); }
+  .chart-label.teal { color: var(--teal); }
+
+  /* SERVICES */
+  #services { background: var(--cream); }
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); margin-top: 56px; }
+  .service-card { background: var(--white); padding: 40px 32px; transition: background 0.2s; }
+  .service-card:hover { background: var(--teal-light); }
+  .service-icon { font-size: 28px; margin-bottom: 18px; display: block; }
+  .service-name { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--dark); margin-bottom: 12px; }
+  .service-desc { font-size: 14px; font-weight: 300; color: var(--mid); line-height: 1.7; }
+
+  /* PACKAGES */
+  #packages { background: var(--white); }
+  .packages-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 56px; }
+  .package-card { border: 1px solid var(--border); padding: 40px 32px; position: relative; transition: transform 0.2s, box-shadow 0.2s; }
+  .package-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,151,178,0.1); }
+  .package-card.featured { border-color: var(--teal); }
+  .featured-tag { position: absolute; top: -1px; right: -1px; background: var(--teal); color: white; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; padding: 4px 12px; }
+  .package-tier { font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: var(--teal); margin-bottom: 10px; font-weight: 500; }
+  .package-name { font-family: 'Playfair Display', serif; font-size: 24px; color: var(--dark); margin-bottom: 18px; }
+  .package-price { font-family: 'Playfair Display', serif; font-size: 46px; color: var(--teal); line-height: 1; margin-bottom: 4px; }
+  .package-price-sub { font-size: 12px; color: var(--light); letter-spacing: 1px; margin-bottom: 24px; }
+  .package-divider { width: 30px; height: 1px; background: var(--border); margin-bottom: 22px; }
+  .package-features { list-style: none; margin-bottom: 28px; }
+  .package-features li { font-size: 13px; font-weight: 300; color: var(--mid); padding: 7px 0; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; gap: 10px; line-height: 1.5; }
+  .package-features li::before { content: '-'; color: var(--teal); flex-shrink: 0; font-size: 11px; margin-top: 1px; }
+  .package-cta { display: block; text-align: center; padding: 12px; border: 1.5px solid var(--teal); color: var(--teal); text-decoration: none; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; font-weight: 500; transition: all 0.2s; }
+  .package-cta:hover, .package-card.featured .package-cta { background: var(--teal); color: white; }
+  .packages-note { margin-top: 28px; font-size: 13px; font-weight: 300; color: var(--light); text-align: center; font-style: italic; }
+
+  /* TESTIMONIALS */
+  #testimonials { background: var(--cream); }
+  .testimonials-placeholder { text-align: center; padding: 70px 40px; border: 1px dashed var(--border); margin-top: 56px; }
+  .placeholder-title { font-family: 'Playfair Display', serif; font-size: 24px; color: var(--dark); margin-bottom: 10px; font-style: italic; }
+  .placeholder-sub { font-size: 13px; color: var(--light); font-weight: 300; }
+  .placeholder-cta { display: inline-block; margin-top: 24px; padding: 10px 28px; border: 1px solid var(--teal); color: var(--teal); text-decoration: none; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; transition: all 0.2s; }
+  .placeholder-cta:hover { background: var(--teal); color: white; }
+
+  /* CONTACT */
+  #contact { background: var(--dark); text-align: center; }
+  #contact .section-label { color: rgba(0,151,178,0.8); }
+  #contact .section-title { color: var(--cream); margin: 0 auto 14px; }
+  #contact .section-body { color: rgba(255,255,255,0.45); margin: 0 auto 36px; }
+  .contact-email { display: inline-block; font-family: 'Playfair Display', serif; font-size: clamp(18px, 3vw, 26px); color: var(--teal); text-decoration: none; border-bottom: 1px solid rgba(0,151,178,0.3); padding-bottom: 4px; transition: border-color 0.2s; }
+  .contact-email:hover { border-color: var(--teal); }
+
+  footer { background: #111; padding: 22px 5%; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.05); }
+  .footer-logo { font-family: 'Playfair Display', serif; font-size: 14px; color: rgba(255,255,255,0.35); }
+  .footer-logo span { color: var(--teal); }
+  .footer-copy { font-size: 11px; color: rgba(255,255,255,0.2); letter-spacing: 1px; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+
+  @media (max-width: 768px) {
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .services-grid { grid-template-columns: 1fr; }
+    .packages-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    footer { flex-direction: column; gap: 8px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-bar"></div>
+
+<nav>
+  <a href="#" class="nav-logo">
+    <span class="nav-logo-tidal">tidal</span>
+    <span class="nav-logo-posting"> posting</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#packages">Packages</a></li>
+    <li><a href="#testimonials">Results</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="region-switcher">
+    <button class="region-btn active" onclick="document.querySelectorAll('.region-btn').forEach(function(b){b.classList.remove('active')});this.classList.add('active');var p={uk:{s:'£200',g:'£350',pl:'£550'},us:{s:'$350',g:'$650',pl:'$950'}};var r='uk';document.getElementById('price-silver').textContent=p[r].s;document.getElementById('price-gold').textContent=p[r].g;document.getElementById('price-platinum').textContent=p[r].pl;">🇬🇧 UK</button>
+    <button class="region-btn" onclick="document.querySelectorAll('.region-btn').forEach(function(b){b.classList.remove('active')});this.classList.add('active');var p={uk:{s:'£200',g:'£350',pl:'£550'},us:{s:'$350',g:'$650',pl:'$950'}};var r='us';document.getElementById('price-silver').textContent=p[r].s;document.getElementById('price-gold').textContent=p[r].g;document.getElementById('price-platinum').textContent=p[r].pl;">🇺🇸 US</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="hero-eyebrow">Social Media Management</p>
+  <h1 class="hero-title">
+    Your business deserves<br>
+    <span class="hero-title-script">to be seen.</span>
+  </h1>
+  <div class="hero-divider"></div>
+  <p class="hero-subtitle">Tidal Posting helps gaming businesses, local shops, and content creators build a real, consistent online presence - without the agency price tag.</p>
+  <a href="#contact" class="hero-cta">Find your tide</a>
+  <div class="scroll-hint">
+    <span class="scroll-text">Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div>
+        <p class="section-label">Who we are</p>
+        <h2 class="section-title">Not an agency.<br><em>A specialist.</em></h2>
+        <p class="section-body" style="margin-bottom:20px;">Tidal Posting is run by Jazmine - a gamer, streamer, and social media manager who understands what actually makes content perform. No outsourcing. No guesswork.</p>
+        <p class="section-body">Consistency is the strategy. The algorithm rewards accounts that show up. Every post compounds - and the accounts that win are the ones that never go quiet.</p>
+      </div>
+      <div>
+        <div class="about-stats">
+          <div class="stat-box">
+            <div class="stat-num">2×</div>
+            <div class="stat-label">Posts per week, every week</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">2</div>
+            <div class="stat-label">Unique stories per week</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">0</div>
+            <div class="stat-label">Dead posts or filler content</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">∞</div>
+            <div class="stat-label">Compounding visibility over time</div>
+          </div>
+        </div>
+        <div class="chart-wrap">
+          <div class="chart-title">Visibility over time</div>
+          <svg class="chart-svg" viewBox="0 0 400 120" xmlns="http://www.w3.org/2000/svg">
+            <!-- Grid lines -->
+            <line x1="0" y1="30" x2="400" y2="30" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+            <line x1="0" y1="60" x2="400" y2="60" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+            <line x1="0" y1="90" x2="400" y2="90" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+            <!-- Divider line -->
+            <line x1="180" y1="0" x2="180" y2="120" stroke="rgba(0,151,178,0.3)" stroke-width="1" stroke-dasharray="4,3"/>
+            <!-- Phase 1: erratic/low - left side -->
+            <polyline
+              points="0,85 20,70 40,90 60,75 80,88 100,65 120,80 140,72 160,84 180,78"
+              fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2" stroke-linejoin="round"/>
+            <!-- Phase 2: consistent upward - right side -->
+            <polyline
+              points="180,78 200,68 220,58 240,48 260,38 280,28 300,20 320,14 340,9 360,6 380,4 400,2"
+              fill="none" stroke="#0097b2" stroke-width="2.5" stroke-linejoin="round"/>
+            <!-- Glow under teal line -->
+            <polygon
+              points="180,78 200,68 220,58 240,48 260,38 280,28 300,20 320,14 340,9 360,6 380,4 400,2 400,120 180,120"
+              fill="url(#tealGrad)" opacity="0.15"/>
+            <defs>
+              <linearGradient id="tealGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#0097b2"/>
+                <stop offset="100%" stop-color="transparent"/>
+              </linearGradient>
+            </defs>
+            <!-- Marker dot at transition -->
+            <circle cx="180" cy="78" r="4" fill="#0097b2"/>
+          </svg>
+          <div class="chart-labels">
+            <span class="chart-label">Infrequent posting</span>
+            <span class="chart-label teal">Tidal Posting →</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-inner">
+    <p class="section-label">What we do</p>
+    <h2 class="section-title">For businesses being let down<br><em>by generic content.</em></h2>
+    <div class="services-grid">
+      <div class="service-card">
+        <span class="service-icon">🎮</span>
+        <h3 class="service-name">Gaming Businesses</h3>
+        <p class="service-desc">Game shops, arcades, board game cafes, retro stores. Content that speaks to gamers because it's made by one.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">🏪</span>
+        <h3 class="service-name">Local Businesses</h3>
+        <p class="service-desc">Cafes, phone repair shops, independent stores. Strategy that keeps you visible and discoverable year-round.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">🎬</span>
+        <h3 class="service-name">Content Creators</h3>
+        <p class="service-desc">Streamers and creators who want their best moments on every platform without the editing overhead.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PACKAGES -->
+<section id="packages">
+  <div class="section-inner">
+    <p class="section-label">Pricing</p>
+    <h2 class="section-title">Simple packages.<br><em>Real results.</em></h2>
+    <p class="section-body">All packages include content creation. You provide raw footage or product shots - we handle everything else.</p>
+    <div class="packages-grid">
+
+      <div class="package-card">
+        <p class="package-tier">Silver</p>
+        <h3 class="package-name">Basic Presence</h3>
+        <div class="package-price" id="price-silver">£200</div>
+        <p class="package-price-sub">per month</p>
+        <div class="package-divider"></div>
+        <ul class="package-features">
+          <li>1 social platform</li>
+          <li>2 posts or reels per week</li>
+          <li>2 unique stories per week</li>
+          <li>Content creation included</li>
+        </ul>
+        <a href="#contact" class="package-cta">Get started</a>
+      </div>
+
+      <div class="package-card featured">
+        <div class="featured-tag">Most popular</div>
+        <p class="package-tier">Gold</p>
+        <h3 class="package-name">Active Presence</h3>
+        <div class="package-price" id="price-gold">£350</div>
+        <p class="package-price-sub">per month</p>
+        <div class="package-divider"></div>
+        <ul class="package-features">
+          <li>2 social platforms</li>
+          <li>3 posts or reels per week</li>
+          <li>3 stories per week</li>
+          <li>Content creation included</li>
+          <li>Comment management</li>
+        </ul>
+        <a href="#contact" class="package-cta">Get started</a>
+      </div>
+
+      <div class="package-card">
+        <div class="featured-tag" style="background:#1a1a1a;">Best value</div>
+        <p class="package-tier">Platinum</p>
+        <h3 class="package-name">Full Management</h3>
+        <div class="package-price" id="price-platinum">£550</div>
+        <p class="package-price-sub">per month</p>
+        <div class="package-divider"></div>
+        <ul class="package-features">
+          <li>3 social platforms</li>
+          <li>3 posts or reels per week</li>
+          <li>3 stories per week</li>
+          <li>Content creation included</li>
+          <li>Comment management</li>
+          <li>DM management</li>
+        </ul>
+        <a href="#contact" class="package-cta">Get started</a>
+      </div>
+
+    </div>
+    <p class="packages-note">3-month minimum term. Monthly performance reports included.</p>
+
+    <div style="margin-top: 48px; border-top: 1px solid var(--border); padding-top: 40px;">
+      <p style="font-size:10px; letter-spacing:5px; text-transform:uppercase; color:var(--teal); margin-bottom:16px; font-weight:500;">Add-on Services</p>
+      <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1px; background:var(--border); border:1px solid var(--border);">
+        <div style="background:var(--cream); padding:28px 32px;">
+          <p style="font-family:'Playfair Display', serif; font-size:17px; color:var(--dark); margin-bottom:8px;">Local Content Capture</p>
+          <p style="font-size:13px; font-weight:300; color:var(--mid); line-height:1.7; margin-bottom:10px;">I can come to you to capture original b-roll, product shots, store footage, and real content your audience will connect with.</p>
+          <p style="font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--teal); font-weight:500;">Pricing on request</p>
+        </div>
+        <div style="background:var(--cream); padding:28px 32px;">
+          <p style="font-family:'Playfair Display', serif; font-size:17px; color:var(--dark); margin-bottom:8px;">Gaming Clip Editing</p>
+          <p style="font-size:13px; font-weight:300; color:var(--mid); line-height:1.7; margin-bottom:10px;">Send your clips or raw footage and I'll edit, format for vertical, add captions and post across TikTok, Instagram Reels, and YouTube Shorts. VOD cutting and full highlight packages also available. Made by a gamer who knows what performs.</p>
+          <p style="font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--teal); font-weight:500;">Pricing on request</p>
+        </div>
+        <div style="background:var(--cream); padding:28px 32px; border-top:1px solid var(--border);">
+          <p style="font-family:'Playfair Display', serif; font-size:17px; color:var(--dark); margin-bottom:8px;">YouTube Thumbnails</p>
+          <p style="font-size:13px; font-weight:300; color:var(--mid); line-height:1.7; margin-bottom:10px;">Custom thumbnails designed to stop the scroll and drive clicks. Whether you need clean, minimal designs or bold graphic styles, we'll find what works for your channel.</p>
+          <p style="font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--teal); font-weight:500;">Pricing on request</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="section-inner">
+    <p class="section-label">Results</p>
+    <h2 class="section-title">What happens when<br><em>you show up consistently.</em></h2>
+    <div class="testimonials-placeholder">
+      <p class="placeholder-title">Testimonials coming soon.</p>
+      <p class="placeholder-sub">Currently accepting first clients - be the first result on this page.</p>
+      <a href="#contact" class="placeholder-cta">Get in touch</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <p class="section-label">Get in touch</p>
+    <h2 class="section-title">Ready to find<br><em>your tide?</em></h2>
+    <p class="section-body">Tell me about your business and what you're looking for. I'll get back to you within 24 hours.</p>
+    <br><br>
+    <a href="/cdn-cgi/l/email-protection#a6ccc7dccbcfc8c3e6d2cfc2c7cad6c9d5d2cfc8c188c5c9cb" class="contact-email"><span class="__cf_email__" data-cfemail="b5dfd4cfd8dcdbd0f5c1dcd1d4d9c5dac6c1dcdbd29bd6dad8">[email&#160;protected]</span></a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo"><span>tidal</span> posting</div>
+  <div class="footer-copy">© 2026 Tidal Posting · tidalposting.com</div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  const prices = {
+    uk: { silver: '£200', gold: '£350', platinum: '£550' },
+    us: { silver: '$350', gold: '$650', platinum: '$950' }
+  };
+  function setRegion(region, btn) {
+    document.querySelectorAll('.region-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getEleme
